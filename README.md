@@ -112,7 +112,7 @@
 ## 3일차
 - 기초문법 계속
     - [JAVA기초문법](./JAVA_BASIC.md)
-    - 상속, 인터페이스, 예외처리, 제네릭, 컬레션 프레임워크, 입출력
+    - 상속, 인터페이스, 예외처리
 
 ### Spring Boot Build Tool
 - 개요
@@ -152,8 +152,31 @@
 
 ## 4일차 
 - 기초문법 마무리
-- Spring Boot 시작
+    - [JAVA기초문법](./JAVA_BASIC.md)
+    - 제네릭, 컬렉션 프레임워크, 입출력, 람다식, 스트림API
+
+- Gradle 오류 해결방법
+    - [Gradle](https://gradle.org/install/)
+    - C:\Gradle 위치에 압축해제
+    - sysdm.cpl 환경변수 GRADLE_HOME 경로 입력, 확인(JAVA_HOME과 동일)
+
+    <img src="./image/sb0005.png" width="600">
+
+    - VS Code 설정
+    
+    <img src="./image/sb0003.png" width="700">
+    
+    - Gradle Build Server: Enabled 기본 on -> off
+
+    <img src="./image/sb0004.png" width="700">
+
+    - Gradle Home -> 환경변수 입력한 GRADLE_HOME의 경로 입력
+    - Gradle Java Home -> 현경변수 JAVA_HOME의 경로 입력
+    
+
+    - VS Code 재시작.
 
 ## 5일차
+- Spring Boot 시작
 
 ## 6일차(06-26)
