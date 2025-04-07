@@ -542,3 +542,56 @@ public static void main(String[] args) {
 
 - [Java문법실습](./day04/spring04/src/main/java/com/hugo83/spring04/Spring04Application.java)
 
+
+#### StringBuilder
+- String 객체는 불변의 성질. 한번 생성되면 변경불가
+- 연산자로 수정을 하면 기존 메모리는 두고, 다시 String객체를 생성
+- 이를 해결하고자 하기 위해 만든 것 - StringBuilder
+- 리스트와 유사. 문자열 처리때문에 메모리 문제, 성능문제가 발생하면 StringBuilder, StringBuffer 사용 고려
+
+    ```java
+    StringBuilder sb = new StringBuilder();
+    sb.append("Hello");
+    sb.append("Java!");
+    // insert(), delete()
+    ```
+
+- [JAVA문법실습](./day05/spring01/src/main/java/com/hugo83/spring01/Spring01Application.java)
+
+#### GC(Garbage Collection)
+- C등 절차적 언어에서는 객체를 생성해서 메모릴 사용하면, 개발자가 직접 해제해줘야 함
+- 메모리 누수가 발생
+- 객체지향 언어에서는 GC 만들어서 메모리를 언어가 직접 핸들링 처리
+
+#### 파일입출력
+- 파일을 읽고 쓰는 작업
+- 파일쓰기에 `FileOutputStream`, `FileWriter`, `PrintWriter` 등의 클래스 사용
+- 입출력 예외가 발생할 수 있기때문에 클래스나 메서드에 `throws IOException`을 추가해야 함
+- 파일읽기에 `FileInputStream`, `BufferedReader` 클래스 사용
+
+- [JAVA문법실습](./day05/spring02/src/main/java/com/hugo83/spring02/Spring02Application.java)
+
+
+#### 어노테이션
+- 한글로 주석이지만, #, //,  /**/ 소스에 영향을 미치지 않는 주석과 다름
+- 자바 소스에 추가해서 여러가지 기능을 수행하는 메타데이터 일종
+- @로 시작, JDK 1.5 이상부터 사용가능
+- 클래스 파일에 같이 포함되어 JVM 작동시 실행됨
+- 클래스, 메서드 바로 위에 작성. 코드와 설정을 관리할 수 있게 도와주는 역할
+
+##### 1. @Override
+- 오버라이드를 올바르게 했는지 컴파일러 체크
+- 상속, 인터페이스 구현시 사용
+
+##### 2. @Deprecated
+- 앞으로 다음버전에서 삭제될 수 있음. 사용하지 말것을 권유하는 체크
+
+<img src="./image/sb0011.png" width="700">
+
+- 되도록이면 이 함수는 사용할지 말것
+
+##### 3. @FunctionalInterface
+- 함수형 인터페이스에 붙여서, 컴파일러가 올바르게 작성되었는지 체크
+
+##### 4. @SuppressWarnings
+- 컴파일러의 경고메시지가 표시되지 않음
