@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스프링부트 백보드</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-5.3.7-dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-icons-1.13.1/bootstrap-icons.min.css}">
+</head>
+<body>
+    <!-- 레이아웃에서 화면마다 변경될 컨텐츠 영역 -->
+    <th:block layout:fragment="content"></th:block>
+
+    <script th:src="@{/bootstrap-5.3.7-dist/js/bootstrap.min.js}"></script>
+</body>
+</html>
