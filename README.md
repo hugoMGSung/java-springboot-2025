@@ -511,7 +511,41 @@
 ## 7일차(07-01)
 
 ### 스프링부트 Backboard 프로젝트(계속)
+1. 단위 테스트 
+  1. UPDATE 테스트
 
+2. 계발 계속
+  1. Entity 중 Board(게시글)의 댓글 Reply 클래스 생성
+  2. DB ERD에서 Board : Reply => 1:N(1대 다)를 관계를 가짐
+  3. @(Annotation) 추가
+    - @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE) : 1대다 ERD 관계로 부모클래스(테이블)에 작성하는 부분
+    - @ManyToOne : 다대1 ERD관계로 자식클래스에 작성하는 부분
+    - @Service : 서비스 모듈을 지칭(SpringFramework)
+    - @RequiredArgsConstructor : 생성자를 만들어줌. 파라미터가 존재하는 생성자를 자동으로 생성(Lombok)
+    - @NoArgsContructor : 파라미터 없는 빈생성자를 자동으로 생성(Lombok)
+  4. ReplyRepository 인터페이스 작성
+  5. Service 작성
+    - 데이터 처리를 위해서 작성하는 클래스. MVC처럼 패턴처럼 모듈화로 복잡한 코드를 단순화, 역할분리를 위해서
+    - Controller는 게이트(문) 사용자가 접속해서 요청하는 부분
+  6. 엔티티를 DTO 객체 변환
+    - Entity : DB와 연결되어 있는 클래스. 이 객체를 그대로 사용해서 FE로 보내는 방식이 좋지 않음
+    - Dto 사용은 옵션으로 할 수도 있음
 
+  7. BoardController 작성
+  8. /templates/board_list.html 생성 
+    - thymeleaf 문법 적용
 
+      <img src="./image/sb0014.png" width="600">
 
+  9. 상세 페이지 작업
+    - Service, Controller 메서드 작업
+
+  10. 상세 페이지에 댓글 저장 기능 추가
+    - board_detail.html에 댓글 저장 폼양식 추가
+    - ReplyService, ReplyController 각각 생성, 작성
+    
+3. thymeleaf 문법
+  - ${} : 변수 표현식. 변수에 들어있는 값을 화면에 표시하는 기능. Model에 들어있는 데이터를 화면에 표시
+  - @{} : URL링크 표현식. 정적인 링크 또는 라우팅되는 경로를 생성하는 기능
+  - #{} : 메시지 표현식
+  - thymeleaf 속성에만 사용가능 : th:text, th:href ... 

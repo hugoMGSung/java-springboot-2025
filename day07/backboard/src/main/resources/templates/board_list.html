@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판 리스트</title>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>제목</th>
+                <th>작성일자</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="board, index : ${boardList}">
+                <td>
+                    <a th:href="@{|/board/detail/${board.bno}|}" th:text="${board.title}"></a>
+                </td>
+                <td th:text="${board.createDate}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
