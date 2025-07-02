@@ -521,8 +521,9 @@
         - @OneToMany(mappedBy = "board", cascade = CascadeType.REMOVE) : 1대다 ERD 관계로 부모클래스(테이블)에 작성하는 부분
         - @ManyToOne : 다대1 ERD관계로 자식클래스에 작성하는 부분
         - @Service : 서비스 모듈을 지칭(SpringFramework)
-        - @RequiredArgsConstructor : 생성자를 만들어줌. 파라미터가 존재하는 생성자를 자동으로 생성(Lombok)
-        - @NoArgsContructor : 파라미터 없는 빈생성자를 자동으로 생성(Lombok)
+        - @RequiredArgsConstructor : final등의 멤버변수를 파라미터로 생성자를 만들어주는 것(Lombok)
+        - @AllArgsContructor : 클래스 멤버변수를 사용해서 생성자를 만들어주는 것(Lombok)
+        - @NoArgsContructor : 파라미터(클래스 멤버변수) 없는 빈생성자를 자동으로 생성(Lombok)
     4. ReplyRepository 인터페이스 작성
     5. Service 작성
         - 데이터 처리를 위해서 작성하는 클래스. MVC처럼 패턴처럼 모듈화로 복잡한 코드를 단순화, 역할분리를 위해서
@@ -548,6 +549,8 @@
     - ${} : 변수 표현식. 변수에 들어있는 값을 화면에 표시하는 기능. Model에 들어있는 데이터를 화면에 표시
     - @{} : URL링크 표현식. 정적인 링크 또는 라우팅되는 경로를 생성하는 기능
     - #{} : 메시지 표현식
+    - *{} : 선택변수 표현식. th:object 로 선택된 객체 내의 값에 접근
+    - ~{} : Fragment포함 표현식. 템플릿 Fragement를 사용
     - thymeleaf 속성에만 사용가능 : th:text, th:href ... 
 
 4. 웹 페이지 디자인
@@ -570,4 +573,25 @@
 
         https://github.com/user-attachments/assets/e34d7247-6812-448f-b198-fd0b3896a657
 
+
+## 8일차
+### 스프링부트 Backboard 프로젝트(계속)
+3. DB연동 개발
+    1. 게시글 등록 기능
+    2. Spring Boot Validation 기능 추가 : 입력 검증
+
+        ```gradle
+        // 추가 의존성
+	      implementation 'org.springframework.boot:spring-boot-starter-validation'
+        ```
+        - Annotation으로 검증 수행
+            - @Size, @NotNull, @NotEmpty, @Past(과거날짜만 가능), @Future(미래날짜만)
+            - @FutureOrPresent(미래또는 오늘날짜만), @Pattern(정규식패턴)
+
+    3. 입력검증 클래스, BoardForm.java 생성
+    4. BoardForm 객체를 컨트롤러에 전달
+    5. board_create.html에 입력검증 태그, 속성 등 추가
+        - GetMethod, PostMethod에 BoardForm 파라미터를 추가!
+
+    6. board_detail.html에 댓글 입력 검증
 
