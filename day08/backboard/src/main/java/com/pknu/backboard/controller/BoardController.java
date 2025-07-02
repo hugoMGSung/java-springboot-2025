@@ -1,7 +1,5 @@
 package com.pknu.backboard.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -65,7 +63,7 @@ public class BoardController {
         if (bindingResult.hasErrors()) 
             return "board_create";
 
-        // TODO: 포스트 액션이후 처리
+        // 포스트 액션이후 처리
         this.boardService.setBoardOne(boardForm.getTitle(), boardForm.getContent());
         
         return "redirect:/board/list";  
