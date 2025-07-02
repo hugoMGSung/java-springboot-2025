@@ -6,10 +6,12 @@
                 <h5 class="my-3 pb-2">게시글 작성</h5>
 
                 <form th:action="@{/board/create}" th:object="${boardForm}" method="post">
-                    <!-- 입력검증영역 -->
-                    <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+                    <!-- 입력검증영역 / 초기작업 -->
+                    <!-- <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
                         <div th:each="error : ${#fields.allErrors()}" th:text="${error}"></div>
-                    </div>
+                    </div> -->
+                    <!-- 입력검증영역 / 템플릿화 -->
+                    <div th:replace="~{valid_error :: errorFragment}"></div>
                     <!-- 제목영역 -->
                     <div class="mb-3">
                         <label for="title" class="form-label">제목</label>

@@ -576,7 +576,7 @@
 
 ## 8일차
 ### 스프링부트 Backboard 프로젝트(계속)
-3. DB연동 개발
+1. DB연동 개발
     1. 게시글 등록 기능
     2. Spring Boot Validation 기능 추가 : 입력 검증
 
@@ -591,7 +591,44 @@
     3. 입력검증 클래스, BoardForm.java 생성
     4. BoardForm 객체를 컨트롤러에 전달
     5. board_create.html에 입력검증 태그, 속성 등 추가
-        - GetMethod, PostMethod에 BoardForm 파라미터를 추가!
+        - GetMapping, PostMapping 메서드에 BoardForm 파라미터를 추가!
 
-    6. board_detail.html에 댓글 입력 검증
+    6. board_detail.html에 댓글 입력 검증 태그 추가
+        - ReplyController 의 PostMapping 메서드에 ReplyForm을 파라미터로 추가
+        - BoardController의 GetMapping 메서드에 ReplyForm을 @Valid 파라미터로 추가        
 
+    7. 검증영역 태그를 valid_error.html 템플릿 생성
+
+2. Bootstrap 템플릿 사이트
+    - https://startbootstrap.com/
+    - https://bootstrapmade.com/bootstrap-5-templates/
+    - https://mdbootstrap.com/freebies/
+    - https://bootstrapmade.com/
+    - https://www.youtube.com/@codehal (No Bootstrap)
+
+3. Bootstrap Navigation 구현
+    - templates/layout.html 네비게이션 태그 작성
+
+4. Paging : 대량 데이터 로드시 속도 개선
+    - Dummy Data 생성 : Unit 테스트로 대략 200건 입력
+    - Page, Pageable 인터페이스
+        ```java
+        import org.springframework.data.domain.Page;
+        import org.springframework.data.domain.Pageable;
+        ```
+
+    - BoardRepository 인터페이스에 페이징용 findAll() 재정의
+    - BoardService 클래스에 페이징용 getBoardList() 오버로딩 작성
+    - BoardController 클래스에 getList()에 페이징 파라미터 추가
+    - board_list.html에 페이징 컨트롤 추가
+
+        <img src="./image/sb0015.png" width="600">
+
+    - 페이징번호가 모두 표시되는 문제 발생
+
+## 9일차
+
+### 스프링부트 Backboard 프로젝트(계속)
+
+1. Paging 구현 계속
+    1. 

@@ -12,7 +12,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="board, index : ${boardList}">
+                        <tr th:each="board, index : ${boardPaging}">
                             <td th:text="${index.count}"></td>
                             <td>
                                 <a th:href="@{|/board/detail/${board.bno}|}" th:text="${board.title}"></a>
@@ -22,8 +22,36 @@
                     </tbody>
                 </table>
                 
+                <!-- <div class="text-end">
+                    <a th:href="@{/board/create}" class="btn btn-sm btn-primary">글쓰기</a>
+                </div> -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-10">
+                <!-- 페이징 컨트롤 영역 -->
+                <div th:if="${!boardPaging.isEmpty()}">
+                    <ul class="pagination justify-content-center">
+                        <!-- 이전페이지 -->
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{|?page=${boardPaging.number-1}|}"><span>&lt;</span></a>
+                        </li>
+                        <!-- 실제 페이지번호 컨트롤 시작 -->
+                        <li th:each="currPage: ${#numbers.sequence(0, boardPaging.totalPages-1)}"
+                            th:classappend="${currPage == boardPaging.number} ? 'active'" class="page-item">
+                            <a class="page-link" th:href="@{|?page=${currPage}|}" th:data-page="${currPage}" th:text="${currPage+1}"></a>
+                        </li>
+                        <!-- 실제 페이지번호 컨트롤 끝 -->
+                        <!-- 다음페이지 -->
+                        <li class="page-item">
+                            <a class="page-link" th:href="@{|?page=${boardPaging.number+1}|}"><span>&gt;</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-2">
                 <div class="text-end">
-                    <!-- <a href="/board/create">글쓰기</a> -->
                     <a th:href="@{/board/create}" class="btn btn-sm btn-primary">글쓰기</a>
                 </div>
             </div>

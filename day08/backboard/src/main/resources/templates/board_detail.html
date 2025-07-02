@@ -44,8 +44,11 @@
         </div>
 
         <!-- 댓글 작성영역-->
-        <form th:action="@{|/reply/create/${board.bno}|}" method="post" class="my-3">
-            <textarea name="content" id="content" rows="5" class="form-control mb-1"></textarea>
+        <form th:action="@{|/reply/create/${board.bno}|}" th:object="${replyForm}" method="post" class="my-3">
+            <!-- 입력검증영역 / 템플릿화 -->
+            <div th:replace="~{valid_error :: errorFragment}"></div>
+            <!-- 댓글내용영역-->
+            <textarea th:field="*{content}" rows="5" class="form-control mb-1"></textarea>
             <div class="text-end">
                 <input type="submit" value="댓글저장" class="btn btn-sm btn-primary">
                 <a href="/board/list" class="btn btn-sm btn-success">리스트</a>

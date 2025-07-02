@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pknu.backboard.entity.Board;
@@ -22,6 +25,13 @@ public class BoardService {
     // SELECT * FROM board
     public List<Board> getBoardList() {
         return this.boardRepository.findAll();
+    }
+
+    // 페이징용 게시판 조회메서드
+    public Page<Board> getBoardList(int page) {
+        Pageable pageable = PageRequest.of(page, 10);  // 10을 변경해서 한페이지에 20, 30개도 표현가능
+
+        return this.boardRepository.findAll(pageable);
     }
 
     // SELECT * FROM board WHERE bno = ?

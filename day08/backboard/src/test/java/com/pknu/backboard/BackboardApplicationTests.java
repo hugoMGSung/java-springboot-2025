@@ -39,6 +39,18 @@ class BackboardApplicationTests {
 		this.boardRepository.save(board2); // INSERT 실행
 	}
 
+	@Test  // INSERT INTO 200개만
+	void testInsertDummyJpa() {
+		for (int i = 0; i < 200; i++) {
+			Board board = new Board();
+			board.setTitle(String.format("테스트 더미데이터입니다 %03d", i));
+			board.setContent("특별한 내용은 없습니다.");
+			board.setCreateDate(LocalDateTime.now());
+
+			this.boardRepository.save(board);
+		}
+	}
+
 	@Test // SELECT * 테스트
 	void testSelectJpa() {
 		List<Board> all = this.boardRepository.findAll();
