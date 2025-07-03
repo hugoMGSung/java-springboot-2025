@@ -38,7 +38,7 @@ public class ReplyController {
         
         if (bindingResult.hasErrors()) {  // 입력검증이 실패하면
             model.addAttribute("board", board);
-            return "board_detail";
+            return "board/board_detail";
         }
         this.replyService.setReply(board, replyForm.getContent());        
         return String.format("redirect:/board/detail/%s", bno);

@@ -21,13 +21,13 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long mno;
 
-    @Column(unique = true, nullable = false, length = 150)
+    @Column(unique = true, length = 150)
     private String username;   // email로 사용
 
     @Column(nullable = false)
     private String password;
 
-    @Column(unique = true, nullable = false, length = 150)
+    @Column(unique = true, length = 150)
     private String email;      // username과 동일하지만
 
     @CreatedDate

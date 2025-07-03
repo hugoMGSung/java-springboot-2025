@@ -42,7 +42,7 @@ public class BoardController {
         Page<Board> boardPaging = this.boardService.getBoardList(page);        
         
         model.addAttribute("boardPaging", boardPaging);
-        return "board_list";  // board_list.html 필요
+        return "board/board_list";  // board_list.html 필요
     }
     
     @GetMapping("/detail/{bno}")
@@ -50,18 +50,18 @@ public class BoardController {
         Board board = this.boardService.getBoardOne(bno);
 
         model.addAttribute("board", board);
-        return "board_detail"; // board_detail.html 필요
+        return "board/board_detail"; // board_detail.html 필요
     }
     
     @GetMapping("/create")  // 작성을 요청할때 
     public String getCreate(BoardForm boardForm) {
-        return "board_create";  // board_crate.html 파일 생성
+        return "board/board_create";  // board_crate.html 파일 생성
     }
 
     @PostMapping("/create") // 저장버튼 클릭 후 
     public String setCreate(@Valid BoardForm boardForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) 
-            return "board_create";
+            return "board/board_create";
 
         // 포스트 액션이후 처리
         this.boardService.setBoardOne(boardForm.getTitle(), boardForm.getContent());

@@ -453,7 +453,8 @@
                 - none : 엔티티가 변경되어도 DB는 변경하지 않음
 
     5. MVC 패턴에 맞춰 각 기능별로 패키지(폴더) 생성
-        - controller, entity, repository, ...
+        - entity, repository, service, controller ...
+        - templates 내 html
 
     6. @(Annotation) 정리
         - Lombok
@@ -674,8 +675,40 @@
         1. SecurityConfig 클래스 내 filterChain 메서드에 CSRF 등 관련 설정 추가
     
     7. 회원가입 구현
-        1. Member 엔티티 클래스 생성
-        2. MemberRepository 인터페이스 생성
+        1. Member 엔티티 클래스 작성
+        2. MemberRepository 인터페이스 작성
+        3. MemberService 클래스 작성
+        4. MemberForm 클래스 작성
+        5. MemberController 클래스 작성
+        6. templates/signup.html 작성
+
+    8. MainController에 URL / 관련 메서드 작업
+        - @GetMapping("/")    
+
+    9. 중복회원 방지 처리
+        1. MemberRepository 커스텀 메서드 추가
+        2. MemberService 중복여부 체크 메서드 추가
+        3. MemberController, setSignUp 메서드 수정
+
+    10. 회원 로그인
+        1. SecurityConfig 클래스에 로그인관련 filterChain 추가
+  
+## 10일차
+
+### 스프링부트 Backboard 프로젝트(계속)
+
+2. Spring Boot Security (계속)
+    1. 회원 로그인
+        1. MemberRole
+        2. MmeberSecurityService
+        3. signin.html
+        4. 회원 로그인 기능
+      
+    2. 회원 로그아웃 기능
+
+
+
+    
 
 
 

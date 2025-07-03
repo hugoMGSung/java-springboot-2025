@@ -15,4 +15,9 @@ public class MainController {
         return "start"; // resources/templates/start.html 을 리턴해서 화면에 출력
     }
 
+    @GetMapping("/")
+    public String home() {
+        return "index"; // templates/index.html 생성
+    }
+
 }
