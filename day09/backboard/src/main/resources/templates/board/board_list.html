@@ -20,6 +20,7 @@
                                 <span th:if="${#lists.size(board.replyList) > 0}"
                                       th:text="${#lists.size(board.replyList)}" 
                                       class="badge text-bg-success"></span>
+
                             </td>
                             <td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
                         </tr>
