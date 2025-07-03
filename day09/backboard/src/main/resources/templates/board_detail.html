@@ -1,0 +1,58 @@
+<!-- layout.html thymeleaf 페이지 로드 -->
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content" class="container my-3">
+        <!-- 게시판 영역 -->
+        <div class="row">
+            <div class="col">
+                <!-- 게시판 상세글 -->
+                <!-- <h2 class="border-bottom py-2 text-primary" th:text="${board.title}"></h2> -->
+                <div class="card my-3 shadow-sm">
+                    <div class="card-body">
+                        <h4 class="card-title" th:text="${board.title}"></h4>
+                        <div class="card-text" th:text="${board.content}"></div>
+                        <div class="d-flex justify-content-end">
+                            <div class="badge bg-light text-dark p-1 text-start">
+                                <div th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                            </div>
+                        </div>                        
+                    </div>
+                </div>  
+            </div>
+        </div>
+        
+        <!-- 댓글 수 표시 영역 -->
+        <div class="row">
+            <div class="col">
+                <h5 th:text="|${#lists.size(board.replyList)}개의 댓글이 있습니다|"></h5>
+            </div>
+        </div>
+
+        <!-- 댓글리스트 영역 -->
+        <div class="row">
+            <div class="col">
+                <div class="card my-2" th:each="reply : ${board.replyList}">
+                    <div class="card-body">
+                        <div class="card-text" th:text="${reply.content}"></div>
+                        <div class="d-flex justify-content-end">
+                            <div class="badge bg-light text-dark p-1 text-start">
+                                <div th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm:ss')}"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 댓글 작성영역-->
+        <form th:action="@{|/reply/create/${board.bno}|}" th:object="${replyForm}" method="post" class="my-3">
+            <!-- 입력검증영역 / 템플릿화 -->
+            <div th:replace="~{valid_error :: errorFragment}"></div>
+            <!-- 댓글내용영역-->
+            <textarea th:field="*{content}" rows="5" class="form-control mb-1"></textarea>
+            <div class="text-end">
+                <input type="submit" value="댓글저장" class="btn btn-sm btn-primary">
+                <a href="/board/list" class="btn btn-sm btn-success">리스트</a>
+            </div>
+        </form> 
+    </div>
+</html>
