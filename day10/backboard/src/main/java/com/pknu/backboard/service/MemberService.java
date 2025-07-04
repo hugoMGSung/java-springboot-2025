@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -44,6 +43,16 @@ public class MemberService {
             return true;  // 같은 아이디 사용자 존재
         } else {
             return false; // 없음. 회원가입 가능
+        }
+    }
+
+    // 실제 사용자 객체 가져오기
+    public Member getMember(String username) {
+        Optional<Member> opMember = this.memberRepository.findByUsername(username);
+        if (opMember.isPresent()) {
+            return opMember.get();   // Member 인스턴스 리턴
+        } else {
+            throw new RuntimeException("member not found");
         }
     }
 }

@@ -26,6 +26,10 @@ public class Reply {
     @Column(length = 1000)
     private String content; // 댓글은 제목컬럼이 필요없음
     
+    // 작성자 추가
+    @ManyToOne   // 사용자가 여러개의 글을 작성가능
+    private Member writer;
+    
     @CreatedDate
     @Column(updatable = false)  // 한번 작성 후 수정하지 않음
     private LocalDateTime createDate; // 게시글 작성일

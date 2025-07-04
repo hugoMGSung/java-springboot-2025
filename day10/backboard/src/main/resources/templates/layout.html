@@ -51,6 +51,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" 
+                           sec:authorize="!isAuthenticated()"
                            th:href="@{/member/signup}">Signup</a>
                     </li>
                 </ul>

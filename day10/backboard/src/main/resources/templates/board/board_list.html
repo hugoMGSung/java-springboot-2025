@@ -6,9 +6,10 @@
                 <table class="table">
                     <thead class="table-light">
                         <tr>
-                            <th>순번</th>
-                            <th>제목</th>
-                            <th>작성일자</th>
+                            <th class="text-center">순번</th>
+                            <th class="text-center">제목</th>
+                            <th class="text-center">작성자</th>
+                            <th class="text-center">작성일자</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,7 +23,10 @@
                                       class="badge text-bg-success"></span>
 
                             </td>
-                            <td th:text="${#temporals.format(board.createDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                            <td>
+                                <span th:if="${board.writer != null}" th:text="${board.writer.username}"></span>
+                            </td>
+                            <td th:text="${#temporals.format(board.createDate, 'yy-MM-dd HH:mm')}"></td>
                         </tr>
                     </tbody>
                 </table>

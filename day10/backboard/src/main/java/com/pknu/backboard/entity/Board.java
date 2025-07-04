@@ -15,6 +15,7 @@ import lombok.*;
 @Entity // JPA 테이블 매핑 선언
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder  // 객체 생성을 간단하게, 체인메서드 사용가능
 public class Board {  
 
     // @AllArgsContructor 와 동일
@@ -42,6 +43,10 @@ public class Board {
 
     @Column(length = 8000)
     private String content; // 게시글 내용
+
+    // 작성자 추가
+    @ManyToOne   // 사용자가 여러개의 글을 작성가능
+    private Member writer;
 
     @CreatedDate
     @Column(updatable = false)  // 한번 작성 후 수정하지 않음
