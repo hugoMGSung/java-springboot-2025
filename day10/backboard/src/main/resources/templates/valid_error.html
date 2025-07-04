@@ -1,0 +1,4 @@
+<!-- 입력검증영역 -->
+<div th:fragment="errorFragment" class="alert alert-warning" role="alert" th:if="${#fields.hasAnyErrors()}">
+    <div th:each="error : ${#fields.allErrors()}" th:text="${error}"></div>
+</div>

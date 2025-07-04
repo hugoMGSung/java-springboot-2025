@@ -51,8 +51,38 @@
 ### Spring Boot 개발환경 설정
 
 - 필요요소
+    - Java, 개발툴, 데이터베이스
 
-  - Java, 개발툴, 데이터베이스
+- 중요점
+    - JPA가 최신 기술이기 때문에 Oracle 11g 이전 DB와는 사용하는 쿼리가 완전 다름
+    - JPA 기능 : 쿼리 작성하지 않고 JPA가 자동으로 쿼리를 생성하고 실행
+    - 게시판 페이징 사용 시
+
+        - 최신버전 : OFFSET, FETCH 키워드 사용 가능
+
+        ```sql
+        SELECT *
+          FROM board
+         ORDER BY create_date DESC
+        OFFSET 20 ROWS FETCH NEXT 10 ROWS ONLY;
+        ```
+
+        - Oracle 11g 이하에서는 OFFSET, FETCH 키워드 사용 불가. 서브쿼리 rownum을 사용해서 페이징 쿼리 작성
+
+        ```sql
+        SELECT * 
+          FROM (
+              SELECT inner_query.*, ROWNUM rnum
+              FROM (
+                  SELECT * FROM board
+                  ORDER BY create_date DESC
+              ) inner_query
+              WHERE ROWNUM <= 30
+          )
+          WHERE rnum >= 21;
+        ```
+
+    - 결론 : Spring Boot에서 JPA를 사용하려면 Oracle 12 이상은 사용해야 함
 
 - Java
 
@@ -699,14 +729,64 @@
 
 2. Spring Boot Security (계속)
     1. 회원 로그인
-        1. MemberRole
-        2. MmeberSecurityService
-        3. signin.html
-        4. 회원 로그인 기능
+        1. MemberRole enum : 스프링 시큐리티에서 역할분배(Admin, User)
+        2. MemberSecurityService : 스프링 시큐리티를 사용하는 로그인 서비스
+            - UserDetailsService 스프링 시큐리티 인터페이스를 구현
+        3. SecurityConfig 계정관련 메서드 추가
+        4. signin.html
+        5. MemberController 에 GetMapping 메서드 작업
+
+    2. 로그인 오류 처리
+        1. SecurityConfig 클래스에 BCryptPasswordEncoder 생성메서드 추가
+        2. MemberService 의 setMember() 패스워드 인코딩시 사용변경
       
-    2. 회원 로그아웃 기능
+    3. 회원 로그아웃 기능
+        1. layout.html 네비게이션 메뉴 signin, signout 태그 분리
+        2. SecurityConfig 클래스 filterChain() 메서드 내 logout 관련 설정
 
 
+3. 개발용 H2 데이터베이스 -> Oracle로 이전
+    1. build.gradle 에 의존성 추가
+
+        ```gradle
+        runtimeOnly 'com.oracle.database.jdbc:ojdbc11'   // 운영용 Oracle         
+        ```
+    2. application.properties에 Oracle 연동관련 설정 추가
+        
+        ```properties
+        ## Oracle 설정
+        spring.datasource.url=jdbc:oracle:thin:@localhost:1521:XE
+        spring.datasource.driver-class-name=oracle.jdbc.OracleDriver
+        spring.datasource.username=madang
+        spring.datasource.password=madang
+
+        ## JPA DB 설정
+        # H2용
+        # spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect
+        spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.OracleDialect
+        ```
+
+4. 도커에 Oracle 21c XE 설치
+    - 11g 사용중 1521포트 사용 중인 상태에서 도커로 21c 설치
+
+        ```shell
+        > docker pull gvenzl/oracle-xe:21
+        ...
+        > docker run -d --name oracle-21-xe -p 11521:1521 -p 8989:8989 -e ORACLE_PASSWORD=oracle gvenzl/oracle-xe:21
+        ```
+
+    - Oracle 21 도커 터미널 접근. DB 생성
+
+        ```shell
+        > docker exec -it oracle-21-xe bash
+        bash-4.4$ sqlplus / as sysdba
+        SQL> create user backboard identified by 12345;      
+        User created.
+        SQL> grant connect, resource to backboard;
+        Grant succeeded.
+        SQL> alter user backboard QUOTA UNLIMITED ON USERS;
+        User altered.
+        ```
 
     
 
