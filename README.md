@@ -823,6 +823,45 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
 
 ### 스프링부트 Backboard 프로젝트(계속)
 
-5. DB 테이블 연동 작업 (계속)
-    1. Board 게시글 삭제 추가
-        1. ...
+1. VS Code 재설치시 삭제해야할 폴더
+    - VS Code 제거
+    - C:/Users/계정/.vscode : 플러그인 등 구성
+    - C:/Users/계정/AppData/Roaming/Code : 전체설정, 백업, 캐시 등 가장 큰 폴더
+    - VS Code 재설치
+
+2. DB 테이블 연동 작업 (계속)
+    1. board_detail.html 수정일자 표시
+    2. Board 게시글 삭제 추가
+        1. board_detail.html 삭제 버튼 추가
+        2. ~~BoardRepository에 삭제처리 로직 추가 필요없음~~
+        3. BoardService에 삭제처리 로직 추가
+        4. BoardController에 삭제처리 GetMapping 추가
+
+3. 댓글에 대한 수정, 삭제
+    - 게시판과 동일하게 작성하면 됨
+    
+4. 좋아요 기능 추가
+    1. Board Entity에 `Set<Member> like` 속성 추가    
+    2. board_detail.html 좋아요 버튼 추가
+    3. BoardService like 관련 메서드 추가
+    4. BoardController 에서 /board/like/{bno} GetMapping 추가
+    5. Reply Entity에 `Set<Member> like` 속성 추가
+    6. board_detail.html 댓글 부분에 좋아요 버튼 추가
+    7. ReplyService 답변가져오기 메서드 getReply() 추가
+    8. ReplyService like 관련 메서드 추가
+    9. ReplyController 에서 /reply/like/{rno} GetMapping 추가
+
+5. 커스텀 에러페이지 처리
+    1. application.properties 에서 Whitelabel Error 설정 해제
+    2. templates/error/500.html 생성
+
+6. 웹 html 에디터 적용
+
+9. 나중에 추가해야할 부분
+
+    1. [ ] 회원가입 후 바로 로그인되는 기능
+    2. [ ] 로그인한 사람 표시기능
+    3. [ ] 테마(라이트, 다크)
+    4. [ ] 파일 업로드
+    5. [ ] 부트스트랩 프리테마로 변경
+    
