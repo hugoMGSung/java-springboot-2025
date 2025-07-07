@@ -8,8 +8,8 @@
                 <!-- <h2 class="border-bottom py-2 text-primary" th:text="${board.title}"></h2> -->
                 <div class="card my-1 shadow-sm">
                     <div class="card-body">
-                        <h4 class="card-title" th:text="${board.title}"></h4>
-                        <div class="card-text" th:text="${board.content}"></div>
+                        <h4 class="card-title" th:text="${board.title}"></h4>                        
+                        <div class="card-text" th:utext="${board.content}"></div>
                         <div class="d-flex justify-content-end">
                             <!-- 게시글 작성자/작성일 배지 -->
                             <div class="badge bg-light text-dark p-1 text-start me-1">
@@ -107,7 +107,8 @@
         </form> 
     </div>
 
-    <script layout:fragment="script">
+    <!-- th:inline="javascript" 자바스크립트 내에 타임리프 문법사용 위해서 -->
+    <script layout:fragment="script" th:inline="javascript">
         const del_elements = document.getElementsByClassName("delete");
         Array.from(del_elements).forEach(function(element) {
             element.addEventListener('click', function() {

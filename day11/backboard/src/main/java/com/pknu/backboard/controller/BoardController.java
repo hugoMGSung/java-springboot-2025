@@ -48,10 +48,12 @@ public class BoardController {
     //     return "board_list";  // board_list.html 필요
     // }
     @GetMapping("/list")  // 각 상세 URL만 작성
-    public String getList(Model model, @RequestParam(value = "page", defaultValue = "0") int page) {
-        Page<Board> boardPaging = this.boardService.getBoardList(page);        
+    public String getList(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+                          @RequestParam(value = "keyword", defaultValue = "") String keyword) {
+        Page<Board> boardPaging = this.boardService.getBoardList(page, keyword);        
         
         model.addAttribute("boardPaging", boardPaging);
+        model.addAttribute("keyword", keyword);
         return "board/board_list";  // board_list.html 필요
     }
     

@@ -854,8 +854,30 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
 5. 커스텀 에러페이지 처리
     1. application.properties 에서 Whitelabel Error 설정 해제
     2. templates/error/500.html 생성
+    5. 템플릿 사이트
+        - https://freefrontend.com/html-404-templates/
+        - https://freefrontend.com/html-500-templates/
 
 6. 웹 html 에디터 적용
+    1. HTML 에디터 종류
+        - https://ckeditor.com/ckeditor-5/ : 전세계에서 가장 유명한 유무료 웹에디터
+        - https://alex-d.github.io/Trumbowyg/ : jQuery가 필요한 간단한 무료 웹에디터
+        - https://summernote.org/ : 정말 간단한 웹에디터
+        - https://simplemde.com/ : 마크다운만 사용하는 웹에디터
+    2. Trumbowyg 적용
+        1. jQuery CDN 적용
+        2. layout.html에 trumbowyg 관련 css, js 링크 추가
+        3. board_create.html에 content textarea와 관련된 스크립트 작성
+        4. 추가 플러그인 js 링크 추가
+    
+        <img src="./image/sb0017.png" width="600">
+
+7. 게시판 검색 기능 추가
+    1. `@Query` : DATA JPA Query annnotation, JPA 상에서 SQL쿼리와 유사한 방식으로 부가적인 기능을 만들고자할 때 사용. 표준 SQL이 아니라서 DBeaver, MySQL Workbench등에서 사용불가
+    2. BoardRepository 에 JPA Query 어노테이션 사용 메서드 추가
+    3. BoardService 에 getBoardList() 변경
+    4. BoardController 에 getList() 키워드 파라미터 추가
+    5. board_list.html 검색부분 추가
 
 9. 나중에 추가해야할 부분
 

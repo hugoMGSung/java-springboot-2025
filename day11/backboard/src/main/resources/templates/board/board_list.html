@@ -3,6 +3,14 @@
     <div layout:fragment="content" class="container my-3">
         <div class="row">
             <div class="col">
+                <div class="input-group">
+                    <input type="text" id="keyword" class="form-control" th:value="${keyword}">
+                    <button class="btn btn-sm btn-secondary" type="button" id="btn_search">검색</button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
                 <table class="table">
                     <thead class="table-light">
                         <tr>

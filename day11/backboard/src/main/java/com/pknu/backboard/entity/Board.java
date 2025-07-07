@@ -42,7 +42,7 @@ public class Board {
     @Column(length = 250)
     private String title; // 게시판 제목
 
-    @Column(length = 8000)
+    @Column(length = 4000)
     private String content; // 게시글 내용
 
     // 작성자 추가
