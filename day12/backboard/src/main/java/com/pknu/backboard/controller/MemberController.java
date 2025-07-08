@@ -5,7 +5,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.pknu.backboard.service.MemberService;
 import com.pknu.backboard.validation.MemberForm;
 
@@ -57,6 +56,8 @@ public class MemberController {
         try {
             // Member 테이블에 저장
             this.memberService.setMember(memberForm.getUsername(), memberForm.getUsername(), memberForm.getPassword1());   
+            // 가져온 멤버로 로그인. 최초에 입력된 평문 패스워드 사용            
+            this.memberService.getSignin(memberForm.getUsername(), memberForm.getPassword1());
         } catch (DataIntegrityViolationException e) {
             e.printStackTrace();
             bindingResult.reject("signupFailed", "이미 등록된 사용자입니다");

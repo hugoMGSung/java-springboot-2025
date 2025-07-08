@@ -27,6 +27,8 @@
                     <!-- 파일업로드 -->
                     <div class="mb-2">
                         <label for="file" class="form-label">파일</label>
+                        <a th:if="${boardForm.fileStoredName != null}" th:text="${boardForm.fileStoredName}">                            
+                        </a>
                         <input type="file" name="file" class="form-control">
                     </div>
                     

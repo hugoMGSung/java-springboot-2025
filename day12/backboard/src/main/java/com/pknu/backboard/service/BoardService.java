@@ -76,10 +76,18 @@ public class BoardService {
     }
 
     // UPDATE board SET ....
-    public void putBoardOne(Board board, String title, String content) {
+    public void putBoardOne(Board board, String title, String content,
+                            String originalName, String storedName, String savePath,
+                            boolean flag) {
         board.setTitle(title);
         board.setContent(content);
         board.setModifyDate(LocalDateTime.now());
+
+        if (flag) {  // 파일 변경 flag가 true이면 처리
+            board.setFileOriginalName(originalName);
+            board.setFileStoredName(storedName);
+            board.setFilePath(savePath);
+        }
 
         this.boardRepository.save(board);
     }

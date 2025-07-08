@@ -4,17 +4,29 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.pknu.backboard.entity.Member;
 import com.pknu.backboard.repository.MemberRepository;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 public class MemberService {
+
+    @Autowired
+    private AuthenticationManager authenticationManager;  // 자동로그인용 계정관리자.
 
     @Autowired
     private final MemberRepository memberRepository;
@@ -54,5 +66,19 @@ public class MemberService {
         } else {
             throw new RuntimeException("member not found");
         }
+    }
+
+    // 자동로그인용 메서드
+    public void getSignin(String username, String password) {
+        // 웹페이지 요청에 대한 FE쪽 객체
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication authentication = authenticationManager.authenticate(token);
+        // SecurityContextHolder.getContext().setAuthentication(authentication);  // SB 서버 세션에 계정정보 전달
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(authentication);
+        request.getSession(true)
+            .setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY, securityContext);
     }
 }

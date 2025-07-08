@@ -2,13 +2,15 @@ package com.pknu.backboard.controller;
 
 import java.io.File;
 import java.io.IOException;
-
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
@@ -49,6 +51,9 @@ public class BoardController {
 
     @Autowired
     private final MemberService memberService;  // 작성자를 위해서 추가
+
+    @Value("${spring.servlet.multipart.location}")
+    private String uploadPath;  // C:/websites/upload/
 
     // @GetMapping("/list")  // 각 상세 URL만 작성
     // public String getList(Model model) {
@@ -92,17 +97,17 @@ public class BoardController {
 
         // 접속한 사용자 정보 
         Member member = this.memberService.getMember(principal.getName());
-
-        String uploadDir = "C:/upload";
-        File dir = new File(uploadDir);
+        
+        System.out.println(uploadPath);
+        File dir = new File(uploadPath);
         if (!dir.exists()) {
             dir.mkdirs(); // 폴더 생성
         }
 
-        if (!file.isEmpty()) {  // 파일 업로드
-            String originalName = file.getOriginalFilename();
+        if (!file.isEmpty()) {  // 파일 업로드            
+            String originalName = file.getOriginalFilename();  // 업로드시는 아무것도 필요없음
             String storedName = UUID.randomUUID().toString() + "_" + originalName;
-            String savePath = "C:/upload/" + storedName;
+            String savePath = uploadPath + storedName;
 
             file.transferTo(new File(savePath));
 
@@ -129,12 +134,19 @@ public class BoardController {
         boardForm.setTitle(board.getTitle());
         boardForm.setContent(board.getContent());
 
+        // 파일업로드 필드 추가
+        boardForm.setFileOriginalName(board.getFileOriginalName());
+        boardForm.setFileStoredName(board.getFileStoredName());
+        boardForm.setFilePath(board.getFilePath());        
+
         return "board/board_create";
     }
     
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/modify/{bno}")  // 수정 요청
-    public String postModify(@Valid BoardForm boardForm, BindingResult bindingResult, @PathVariable("bno") Long bno, Principal principal) {
+    @PostMapping("/modify/{bno}")  // 수정 요청. 파일업로드 파라미터 추가
+    public String postModify(@Valid BoardForm boardForm, 
+                             BindingResult bindingResult, @PathVariable("bno") Long bno, 
+                             Principal principal, @RequestParam("file") MultipartFile file) throws IOException {
         if (bindingResult.hasErrors()) {
             return "board/board_create";
         }
@@ -142,8 +154,23 @@ public class BoardController {
         if (!board.getWriter().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다");
         } // 확인사살. 더블체크. 권한이 없으면 수정못하도록 
-        
-        this.boardService.putBoardOne(board, boardForm.getTitle(), boardForm.getContent());
+
+        // 새 파일업로드
+        if (!file.isEmpty()) { // 파일 재업로드
+            String originalName = file.getOriginalFilename();
+            String storedName = UUID.randomUUID().toString() + "_" + originalName;
+            String savePath = uploadPath + storedName;
+
+            file.transferTo(new File(savePath));
+
+            // 새파일이 업로드 되었으므로 이전 파일을 전부 교체
+            this.boardService.putBoardOne(board, boardForm.getTitle(), boardForm.getContent(), 
+                                          originalName, storedName, savePath, true);  // 새파일로 변경되었다고 true 플래그값을 추가
+        } else {
+            // 이전파일이름 그대로 사용
+            this.boardService.putBoardOne(board, boardForm.getTitle(), boardForm.getContent(),
+                                          "", "", "", false);
+        }
 
         return String.format("redirect:/board/detail/%s", bno);
     }
@@ -175,12 +202,13 @@ public class BoardController {
     
     @GetMapping("/files/{filename}") 
     public ResponseEntity<Resource> downloadFile(@PathVariable("filename") String filename) throws IOException {
-
-        Path path = Paths.get("C:/upload/").resolve(filename);
+        Path path = Paths.get(uploadPath).resolve(filename);
         Resource resource = new UrlResource(path.toUri());  
 
+        // 파일명을 인코딩후 다운로드
+        String encodedFileName = URLEncoder.encode(filename, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
         return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + encodedFileName + "\"")
                     .body(resource);
     }
 }

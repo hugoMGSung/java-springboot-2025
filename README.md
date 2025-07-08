@@ -904,18 +904,31 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
     1. Board Entity에 파일업로드 관련 변수 -> 컬럼
     2. BoardController 게시글 저장 메서드에 파일업로드 로직 추가
     3. BoardService setBoardOne() 메서드 수정
-    4. application.properties 에 파일 업로드 위치 설정 -- TODO
+    4. application.properties 에 파일 업로드 위치 설정
     5. board_create.html에 파일업로드 입력 + form 태그 enctype 속성 추가
     6. board_detail.html에 파일다운로드 링크 추가
     7. BoardController에 파일 다운로드 GetMapping 메서드 추가
     8. 게시글 수정 시 업로드 관련 처리
+        - BoardForm 클래스에 파일업로드 관련 필드 추가(Board 엔티티와 동일)
+    9. BoardController 수정관련 GetMapping 메서드에 로직추가
+    10. BoardService putBoardOne() 메서드에 파일관련 파라미터 추가, 로직 수정
+    11. 파일업로드 사이즈 설정 - application.properties
+    12. 파일업로드시 파일명에 한글이 있으면 문제발생! - 한글을 UTF로 인코딩해서 저장
+
+## 13일차
+
+### 스프링부트 Backboard 프로젝트(계속)
+1. 구글로그인
+    1. 
 
 
 9. 나중에 추가해야할 부분
-    1. [ ] 회원가입 후 바로 로그인되는 기능
+    1. [x] 회원가입 후 바로 로그인되는 기능
     2. [x] 로그인한 사람 표시기능
-    3. [ ] 테마(라이트, 다크)
-    4. [ ] 파일 업로드
-    5. [ ] 부트스트랩 프리테마로 변경
-    6. [ ] 구글로그인
-    7. [ ] AWS 라이트세일 업로드
+    3. [ ] 테마(라이트, 다크) - 패스
+    4. [x] 파일 업로드
+    5. [ ] 부트스트랩 프리테마 NiceSchool로 변경
+    6. [ ] 파일사이즈 초과시 JS로 방지
+    7. [ ] 구글로그인
+    8. [ ] AWS 라이트세일 업로드
+    9. [ ] 게시글에 이미지 추가시 img 태그에 width="100%" 추가작업
