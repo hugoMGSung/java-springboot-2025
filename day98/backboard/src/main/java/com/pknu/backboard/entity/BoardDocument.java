@@ -1,37 +1,47 @@
 package com.pknu.backboard.entity;
 
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
+import java.time.LocalDateTime;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Document(indexName = "board")
-@Getter 
+@Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Document(indexName = "board")  // Elasticsearch에 생성될 인덱스 이름
 public class BoardDocument {
 
     @Id
-    private Long id;
+    private Long bno;
 
     private String title;
 
-    @Field(type = FieldType.Text, analyzer = "nori") // 한글 분석기 적용
     private String content;
 
-    public static BoardDocument fromEntity(Board board) {
-        return BoardDocument.builder()
-                .id(board.getBno())
-                .title(board.getTitle())
-                .content(board.getContent())
-                .build();
+    private String writerName;
+
+    private LocalDateTime createDate;
+
+    private LocalDateTime modifyDate;
+
+    public BoardDocument(Long bno, String title, String content, String writerName, LocalDateTime createDate, LocalDateTime modifyDate) {
+        this.bno = bno;
+        this.title = title;
+        this.content = content;
+        this.writerName = writerName;
+        this.createDate = createDate;
+        this.modifyDate = modifyDate;
+    }
+
+    public static BoardDocument from(Board board) {
+        return new BoardDocument(
+                board.getBno(),
+                board.getTitle(),
+                board.getContent(),
+                board.getWriter() != null ? board.getWriter().getUsername() : null,  // writer 이름 평면화
+                board.getCreateDate(),
+                board.getModifyDate()
+        );
     }
 }

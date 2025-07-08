@@ -50,7 +50,9 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'  // 개발시에만 사용하는 InmemoryDB H2
 	runtimeOnly 'com.oracle.database.jdbc:ojdbc11'   // 운영용 Oracle 
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+	// Elasticsearch 7.17.x용 Spring Data Elasticsearch
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+
 
 	// JUnit 단위테스트
 	testImplementation 'org.junit.jupiter:junit-jupiter'

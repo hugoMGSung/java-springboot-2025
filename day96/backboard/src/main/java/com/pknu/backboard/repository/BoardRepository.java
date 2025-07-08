@@ -26,24 +26,26 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Page<Board> findAll(Pageable pageable); // 페이징 가능한 findAll() 새로 생성
 
     // 아래의 Query에 적혀있는 쿼리문으로 실행해서 결과를 내겠다는 설명
-    @Query(value = """
-            SELECT DISTINCT b.*
-              FROM board b
-              LEFT JOIN reply r ON r.board_bno = b.bno
-             WHERE b.title LIKE '%' || :keyword || '%'
-                OR CONTAINS(b.content, :keyword, 1) > 0
-                OR r.content LIKE '%' || :keyword || '%'
-             ORDER BY b.bno DESC
-            OFFSET :#{#pageable.offset} ROWS FETCH NEXT :#{#pageable.pageSize} ROWS ONLY
-           """,
-        countQuery = """
-            SELECT COUNT(DISTINCT b.bno)
-              FROM board b
-              LEFT JOIN reply r ON r.board_bno = b.bno
-             WHERE b.title LIKE '%' || :keyword || '%'
-                OR CONTAINS(b.content, :keyword, 1) > 0
-                OR r.content LIKE '%' || :keyword || '%'
-            """,
-        nativeQuery = true)
-    Page<Board> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable); 
+    // @Query(value = """
+    //         SELECT DISTINCT b.*
+    //           FROM board b
+    //           LEFT JOIN reply r ON r.board_bno = b.bno
+    //          WHERE b.title LIKE '%' || :keyword || '%'
+    //             OR CONTAINS(b.content, :keyword, 1) > 0
+    //             OR r.content LIKE '%' || :keyword || '%'
+    //          ORDER BY b.bno DESC
+    //         OFFSET :#{#pageable.offset} ROWS FETCH NEXT :#{#pageable.pageSize} ROWS ONLY
+    //        """,
+    //     countQuery = """
+    //         SELECT COUNT(DISTINCT b.bno)
+    //           FROM board b
+    //           LEFT JOIN reply r ON r.board_bno = b.bno
+    //          WHERE b.title LIKE '%' || :keyword || '%'
+    //             OR CONTAINS(b.content, :keyword, 1) > 0
+    //             OR r.content LIKE '%' || :keyword || '%'
+    //         """,
+    //     nativeQuery = true)
+    // Page<Board> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable); 
+
+    Page<Board> findAllByTitleContainingOrContentContaining(@Param("keyword") String keyword, Pageable pageable);
 } 

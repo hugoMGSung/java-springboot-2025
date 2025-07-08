@@ -14,25 +14,7 @@ import lombok.*;
 @Getter
 @Setter // 롬복으로 Getter/Setter 자동화
 @Entity // JPA 테이블 매핑 선언
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder  // 객체 생성을 간단하게, 체인메서드 사용가능
 public class Board {  
-
-    // @AllArgsContructor 와 동일
-    // public Board(Long bno, String title, String content, LocalDateTime createDate, LocalDateTime modifyDate,
-    //         List<Reply> replyList) {
-    //     this.bno = bno;
-    //     this.title = title;
-    //     this.content = content;
-    //     this.createDate = createDate;
-    //     this.modifyDate = modifyDate;
-    //     this.replyList = replyList;
-    // }
-    
-    // @NoArgsContructor와 동일
-    // public Board() {
-    // }
 
     @Id // PK
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
