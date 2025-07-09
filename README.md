@@ -918,8 +918,35 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
 ## 13일차
 
 ### 스프링부트 Backboard 프로젝트(계속)
-1. 구글로그인
-    1. 
+- 시맨틱웹
+    - 웹사이트의 화면 구성을 쉽게 알수 있도록 특수 태그형태의 기술
+    - 특수태그 : header, main, section, article, aside, footer
+
+1. 부트스트랩 프리테마 NiceSchool로 변경
+    1. 초기 작업
+        1. assets 폴더 복사해오기
+        2. favicon 커스터마이징
+        3. 구글폰트 구성
+        4. 3rd party vendor 라이브러리 css, head내 구성
+        5. 메뉴 부분 header 태그 복사
+        6. main 태그를 th:block과 동일하게 사용 class="main" 
+        7. footer 태그 아래는 복사, src 주소 변경
+        8. header > nav 메뉴, 주소 변경
+    2. Index 페이지 관련 이전
+        1. 타임리프 태그 아래에 이전
+
+            ```html
+            <html layout:decorate="~{layout}">
+                <div layout:fragment="content">
+                    <!-- 여기에 복사 -->
+            ```
+        2. 이미지, 동영상 경로 일치
+
+    3. 전체 메뉴 링크 관련된 페이지 작업
+        1. 404.html
+        2. IntroController 클래스 생성, /intro/about GetMapping메서드 작성
+        3. templates/intro/about.html 생성
+
 
 
 9. 나중에 추가해야할 부분
@@ -932,3 +959,5 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
     7. [ ] 구글로그인
     8. [ ] AWS 라이트세일 업로드
     9. [ ] 게시글에 이미지 추가시 img 태그에 width="100%" 추가작업
+    10. [ ] 사용자 정보에 Role 추가
+ 
