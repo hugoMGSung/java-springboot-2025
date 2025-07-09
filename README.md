@@ -946,6 +946,9 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
         1. 404.html
         2. IntroController 클래스 생성, /intro/about GetMapping메서드 작성
         3. templates/intro/about.html 생성
+        4. 동일하게 페이지 옮기기 
+
+
 
 
 
@@ -954,7 +957,7 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
     2. [x] 로그인한 사람 표시기능
     3. [ ] 테마(라이트, 다크) - 패스
     4. [x] 파일 업로드
-    5. [ ] 부트스트랩 프리테마 NiceSchool로 변경
+    5. [x] 부트스트랩 프리테마 NiceSchool로 변경
     6. [ ] 파일사이즈 초과시 JS로 방지
     7. [ ] 구글로그인
     8. [ ] AWS 라이트세일 업로드

@@ -17,9 +17,31 @@ public class IntroController {
     }
     
     @GetMapping("/admissions")
-    public String admissionPage() {
+    public String admissionsPage() {
         // Static 페이지로 대체
 
         return "intro/admissions";  // intro/admissions.html 리턴
     }
+
+    @GetMapping("/academics")
+    public String academicsPage() {
+        // DB에서 동적으로 들고올 데이터 가져오기
+
+        return "intro/academics";  // intro/academics.html 리턴
+    }
+
+    // events
+    @GetMapping("/events")
+    public String eventsPage() {
+        // DB에서 동적으로 들고올 데이터 가져오기
+
+        return "intro/events";  // intro/events.html 리턴
+    }
+
+    @GetMapping("/contact")
+    public String contactPage() {
+        // DB에서 동적으로 들고올 데이터 가져오기
+
+        return "intro/contact";  // intro/contact.html 리턴
+    }    
 }
