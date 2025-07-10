@@ -1,0 +1,136 @@
+<!-- layout.html thymeleaf 페이지 로드 -->
+<html layout:decorate="~{layout}">
+  <div layout:fragment="content">
+    <!-- Page Title -->
+    <div
+      class="page-title dark-background"
+      th:style="|background-image: url('@{/img/education/showcase-1.webp}')|"
+    >
+      <div class="container position-relative">
+        <h1>Admin</h1>
+        <p>관리자 화면</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li class="current">admin</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <!-- End Page Title -->
+
+    <!-- 관리자 입력 영역 / About -->
+    <section id="about_mng" class="new section mx-5">
+      <div class="row">
+        <div class="col">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5>About 관리</h5>
+              <form method="post" th:object="${about}" th:action="@{|/admin/about|}">
+                <div class="mb-2">
+                  <label for="title" class="form-label">타이틀</label>
+                  <input type="text" th:field="*{title}" class="form-control" />
+                </div>
+
+                <div class="mb-2">
+                  <label for="subtitle" class="form-label">서브타이틀</label>
+                  <input type="text" th:field="*{subtitle}" class="form-control" />
+                </div>
+
+                <div class="mb-2">
+                  <label for="ourMission" class="form-label">Our Mission</label>
+                  <input type="text" th:field="*{ourMission}" class="form-control" />
+                </div>
+
+                <div class="mb-2">
+                  <label for="ourVision" class="form-label">Our Vision</label>
+                  <input type="text" th:field="*{ourVision}" class="form-control" />
+                </div>
+
+                <div class="mb-2">
+                  <label for="schoolImgPath" class="form-label">School Image Path</label>
+                  <input type="text" th:field="*{schoolImgPath}" class="form-control" />
+                </div>
+
+                <div class="text-end">
+                    <input type="submit" value="저장" class="btn btn-sm btn-primary"></intput>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+            <h5 th:text="|${#lists.size(about.historyList)}개의 히스토리|"></h5>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+            <div class="card my-2" th:each="history : ${about.historyList}">
+                <div class="card-body">
+                    <div class="card-title" th:text="${history.year}"></div>
+                    <div class="card-text" th:text="${history.description}"></div>
+                    <div class="text-end">
+                        <a th:href="@{|/admin/history/${about.id}|}" class="btn btn-sm btn-outline-secondary"
+                            sec:authorize="isAuthenticated()" th:text="수정"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form method="post" th:action="@{|/admin/history/${about.id}|}">
+                        <div class="mb-2">
+                          <label for="year" class="form-label">년도</label>
+                          <input type="text" id="year" name="year" class="form-control" />
+                        </div>
+        
+                        <div class="mb-2">
+                          <label for="description" class="form-label">설명</label>
+                          <input type="text" id="description" name="description" class="form-control" />
+                        </div>
+
+                        <div class="text-end">
+                            <input type="submit" value="저장" class="btn btn-sm btn-success">
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5>Admissions 관리</h5>
+              <form method="post">
+                <div class="mb-2">
+                  <label for="title" class="form-label">타이틀</label>
+                  <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    class="form-control"
+                  />
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- th:inline="javascript" 자바스크립트 내에 타임리프 문법사용 위해서 -->
+  <script layout:fragment="script"></script>
+</html>

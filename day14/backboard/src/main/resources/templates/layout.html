@@ -102,6 +102,10 @@
                 <a sec:authorize="!isAuthenticated()"
                    th:href="@{/member/signup}">Signup</a>
             </li>
+            <li>
+              <a sec:authorize="isAuthenticated()"
+                 th:href="@{/admin/manage}">Admin</a>
+            </li>
           </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
