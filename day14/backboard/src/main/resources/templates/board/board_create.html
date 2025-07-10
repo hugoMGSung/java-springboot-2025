@@ -1,0 +1,68 @@
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <!-- Page Title -->
+        <div
+        class="page-title dark-background"
+        th:style="|background-image: url('@{/img/education/showcase-1.webp}')|">
+        <div class="container position-relative">
+            <h1>News</h1>
+            <p>
+            최신뉴스입니다.
+            </p>
+            <nav class="breadcrumbs">
+            <ol>
+                <li><a href="/">Home</a></li>
+                <li class="current">News</li>
+            </ol>
+            </nav>
+        </div>
+        </div>
+        <!-- End Page Title -->
+
+        <section id="news" class="news section mx-5">
+            <div class="row">
+                <div class="col">
+                    <h5 class="my-3 pb-2">게시글 작성</h5>
+    
+                    <form th:object="${boardForm}" method="post" enctype="multipart/form-data">
+                        <!-- 글쓰기로 들어오면 action이 /board/create, 수정으로 들어오면 action이 /board/modify 변경 -->
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                        <!-- 입력검증영역 / 초기작업 -->
+                        <!-- <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+                            <div th:each="error : ${#fields.allErrors()}" th:text="${error}"></div>
+                        </div> -->
+                        <!-- 입력검증영역 / 템플릿화 -->
+                        <div th:replace="~{valid_error :: errorFragment}"></div>
+                        <!-- 제목영역 -->
+                        <div class="mb-2">
+                            <label for="title" class="form-label">제목</label>
+                            <input type="text" th:field="*{title}" class="form-control">
+                        </div>
+                        <!-- 내용영역 -->
+                        <div class="mb-2">
+                            <label for="content" class="form-label">내용</label>
+                            <textarea th:field="*{content}" class="form-control" rows="10"></textarea>
+                        </div>
+                        <!-- 파일업로드 -->
+                        <div class="mb-2">
+                            <label for="file" class="form-label">파일</label>
+                            <a th:if="${boardForm.fileStoredName != null}" th:text="${boardForm.fileStoredName}">                            
+                            </a>
+                            <input type="file" name="file" class="form-control">
+                        </div>
+                        
+                        <div class="text-end">
+                            <input type="submit" value="저장" class="btn btn-sm btn-primary my-2">
+                            <a th:href="@{/board/list}" class="btn btn-sm btn-success">리스트</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script layout:fragment="script">
+        // Doing this in a loaded JS file is better, I put this here for simplicity
+        $('#content').trumbowyg();
+    </script>
+</html>

@@ -948,9 +948,19 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
         3. templates/intro/about.html 생성
         4. 동일하게 페이지 옮기기 
 
+## 14일차
 
-
-
+### 스프링부트 Backboard 프로젝트(계속)
+1. 부트스트랩 프리테마 NiceSchool로 변경
+    1. 버튼 CSS 변경 
+    2. `th:style="|background-image: url('@{/img/education/showcase-1.webp}')|"` 오류해결
+    3. About DB연동
+        1. 전체 내용 Entity
+        2. 역사 리스트용 Entity
+        3. AboutRepository 
+        4. AboutService
+        5. IntroController를 수정
+        6. about.html 타임리프와 연동
 
 9. 나중에 추가해야할 부분
     1. [x] 회원가입 후 바로 로그인되는 기능
