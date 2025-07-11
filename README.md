@@ -977,10 +977,53 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
 ### 스프링부트 Backboard 프로젝트(계속)
 1. 부트스트랩 프리테마 NiceSchool로 변경
     1. 관리자 화면 history 수정 부분 완료
+        - AdminController에 히스토리 수정화면으로 넘어가는 GetMapping() 추가
+        - HistoryService 에 리포지토리에서 데이터 가져오는 메서드 추가
+        - HistoryRepository에 한건 가져오는 메서드 추가
+        - /admin/history.html 작성
+        - AdminController에 히스토리 수정가능한 PostMapping() 추가
+
+    2. 로그인한 관리자만 수정할 수 있도록
+        - `@PreAuthorize` 어노테이션으로 처리
 
 2. AWS Lightsale로 업로드
-    1. Oracle DB 구축 -> H2
+    1. AWS 회원가입
+    2. LightSale  
+        1. 인스턴스 생성
+        2. 리전 확인
+        3. Linux/Unix > OS전용 > Ubuntu 22.x 선택
+        4. 인스턴스 플랜 선택(90일 무료)
+        5. 인스턴스 이름 지정 > 생성버튼
+        6. 인스턴스 퍼블릭 고정 IP 주소 확인
+    3. 네트워크
+        1. IPv4 방화벽 설정 : 9070 포트 오픈
     
+    4. 인스턴스만 삭제하면 90일 이후 비용발생 안함
+
+    5. 외부 서버접속 SSH키 발급
+        1. 아이디 > 계정
+        2. SSH 키 탭 진입
+        3. 기본키를 다운로드. *.pem
+
+    6. pem 을 ppk로 변경
+        1. PuTTYgen 실행 > Load > AWS에서 받은 키를 선택
+        2. Save private key로 PPK로 저장
+    6. PuTTY
+        1. PuTTY 터미널 툴 설치 : https://www.putty.org/ 
+        2. 실행
+        3. AWS 고정아이피 host에 입력
+        4. Connection > SSH > Auth > Credential > ppk 파일 선택
+        5. login as : ubuntu 입력 엔터
+
+    7. FTP : https://filezilla-project.org/
+        1. Client 설치
+        2. 사이트관리자 > 새 사이트 
+            - 프로토콜, SFTP : SSH File Transfer Protocol로 변경
+            - 호스트 : AWS 퍼블릭 IP
+            - 로그온 유형 : 키 파일 선택
+            - 사용자 : Ubuntu
+            - 키파일 : *.pem / *.ppk 중 선택 
+            - 연결    
 
 
 9. 나중에 추가해야할 부분

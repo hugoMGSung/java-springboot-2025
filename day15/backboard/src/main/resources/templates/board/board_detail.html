@@ -1,0 +1,155 @@
+<!-- layout.html thymeleaf 페이지 로드 -->
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content">
+        <!-- Page Title -->
+        <div
+            class="page-title dark-background"
+            th:style="|background-image: url('@{/img/education/showcase-1.webp}')|">
+            <div class="container position-relative">
+                <h1>News</h1>
+                <p>
+                최신뉴스입니다.
+                </p>
+                <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li class="current">News</li>
+                </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- End Page Title -->
+
+        <section id="news" class="news section mx-5">
+            <!-- 게시판 영역 -->
+            <div class="row">
+                <div class="col">
+                    <!-- 게시판 상세글 -->
+                    <!-- <h2 class="border-bottom py-2 text-primary" th:text="${board.title}"></h2> -->
+                    <div class="card my-1 shadow-sm">
+                        <div class="card-body">
+                            <h4 class="card-title" th:text="${board.title}"></h4>                        
+                            <div class="card-text" th:utext="${board.content}"></div>
+                            <div class="d-flex justify-content-end">
+                                <a th:if="${board.fileStoredName != null}" th:href="@{'/board/files/' + ${board.fileStoredName}}">
+                                    <i class="bi bi-file-earmark-fill"></i>
+                                </a>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <!-- 게시글 작성자/작성일 배지 -->
+                                <div class="badge bg-light text-dark p-1 text-start me-1">
+                                    <div class="mb-1">
+                                        <span th:if="${board.writer != null}" th:text="${board.writer.username}"></span>
+                                        <span th:if="${board.writer != null}">/</span>
+                                        <span th:text="${#temporals.format(board.createDate, 'yy-MM-dd HH:mm')}"></span>
+                                    </div>
+                                </div>
+                                <!-- 수정일자로 변경 -->
+                                <div class="badge bg-light text-dark p-1 text-start" th:if="${board.modifyDate != null}">
+                                    <div class="mb-1">
+                                        <span>modified</span>
+                                        <span>/</span>
+                                        <span th:text="${#temporals.format(board.modifyDate, 'yy-MM-dd HH:mm')}"></span>
+                                    </div>
+                                </div>
+                            </div>                        
+                        </div>
+                    </div>  
+                </div>
+            </div>
+    
+            <div class="row">
+                <div class="col">
+                    <div class="d-flex justify-content-end" >
+                        <!-- 좋아요! 영역, 로그인된 사용자이기만 하면 사용가능 -->
+                        <a href="javascript:void(0);" class="position-relative d-inline-block me-5 like" 
+                            th:data-url="@{|/board/like/${board.bno}|}" sec:authorize="isAuthenticated()">
+                            <i class="bi bi-heart-fill fs-5 text-danger"></i>
+                            <span class="badge rounded-pill bg-secondary position-absolute" 
+                                    th:text="${#lists.size(board.like)}"></span>
+                        </a>
+                        <!-- 게시글 작성자가 있고, 현재로그인한 사용자의 이름과 작성자 이름이 동일해야 수정 가능 -->  
+                        <a th:href="@{|/board/modify/${board.bno}|}" class="btn btn-sm btn-warning me-1"
+                            th:if="${board.writer != null and #authentication.getPrincipal().getUsername() == board.writer.username}"
+                            sec:authorize="isAuthenticated()">수정</a>
+    
+                        <a href="javascript:void(0);" th:data-url="@{|/board/delete/${board.bno}|}"
+                            class="btn btn-sm btn-danger delete"
+                            th:if="${board.writer != null and #authentication.getPrincipal().getUsername() == board.writer.username}"
+                            sec:authorize="isAuthenticated()">삭제</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 댓글 수 표시 영역 -->
+            <div class="row mt-2">
+                <div class="col">
+                    <h5 th:text="|${#lists.size(board.replyList)}개의 댓글이 있습니다|"></h5>
+                </div>
+            </div>
+    
+            <!-- 댓글리스트 영역 -->
+            <div class="row">
+                <div class="col">
+                    <div class="card my-2" th:each="reply : ${board.replyList}">
+                        <div class="card-body">
+                            <div class="card-text" th:text="${reply.content}"></div>                        
+                            <div class="d-flex justify-content-end">
+                                <div class="badge bg-light text-dark p-1 text-start">
+                                    <div class="mb-1">
+                                        <span th:if="${reply.writer != null}" th:text="${reply.writer.username}"></span>
+                                        <span>/</span>
+                                        <span th:text="${#temporals.format(reply.createDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                                    </div>                                
+                                </div>
+                            </div>
+                            <div class="my-1 d-flex justify-content-end">
+                                <!-- 좋아요! 영역, 로그인된 사용자이기만 하면 사용가능 -->
+                                <a href="javascript:void(0);" class="position-relative d-inline-block me-4 like" 
+                                    th:data-url="@{|/reply/like/${reply.rno}|}" sec:authorize="isAuthenticated()">
+                                    <i class="bi bi-heart-fill fs-5 text-danger"></i>
+                                    <span class="badge rounded-pill bg-secondary position-absolute" 
+                                            th:text="${#lists.size(reply.like)}"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <!-- 댓글 작성영역-->
+            <form th:action="@{|/reply/create/${board.bno}|}" th:object="${replyForm}" method="post" class="my-3">
+                <!-- 입력검증영역 / 템플릿화 -->
+                <div th:replace="~{valid_error :: errorFragment}"></div>
+                <!-- 댓글내용영역 . 로그인하지 않은 사용자는 -->
+                <textarea th:field="*{content}" rows="5" class="form-control mb-1"></textarea>
+                <div class="text-end">
+                    <!-- 로그인을 안하면 아예 버튼이 표시되지 않음 -->
+                    <input sec:authorize="isAuthenticated()" type="submit" value="댓글저장" class="btn btn-sm btn-primary">
+                    <input sec:authorize="isAnonymous()" type="submit" value="댓글저장" class="btn btn-sm btn-primary disabled">
+                    <a href="/board/list" class="btn btn-sm btn-success">리스트</a>
+                </div>
+            </form> 
+
+        </section>
+    </div>
+
+    <!-- th:inline="javascript" 자바스크립트 내에 타임리프 문법사용 위해서 -->
+    <script layout:fragment="script" th:inline="javascript">
+        const del_elements = document.getElementsByClassName("delete");
+        Array.from(del_elements).forEach(function(element) {
+            element.addEventListener('click', function() {
+                if (confirm("삭제하시겠습니까?")) {
+                    location.href = this.dataset.url;
+                }
+            });
+        });
+
+        const like_elements = document.getElementsByClassName("like");
+        Array.from(like_elements).forEach(function(element) {
+            element.addEventListener('click', function() {
+                location.href = this.dataset.url;                
+            });
+        });
+    </script>
+</html>
