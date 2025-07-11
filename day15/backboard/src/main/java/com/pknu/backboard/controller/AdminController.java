@@ -3,7 +3,6 @@ package com.pknu.backboard.controller;
 import java.security.Principal;
 import java.util.Comparator;
 import java.util.List;
-
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,30 +30,39 @@ public class AdminController {
 
     @PreAuthorize("isAuthenticated()") // 계정이 없으면 접근불가
     @GetMapping("/manage")
-    public String managePage(About about) {        
-        About opAbout = aboutService.getAbout();
+    public String managePage(About about) {
+        About opAbout = aboutService.getAboutLatest();  // 가장 마지막 소개글 데이터 가져오기
+        // About opAbout = aboutService.getAbout();
         
-        about.setTitle(opAbout.getTitle());
-        about.setSubtitle(opAbout.getSubtitle());
-        about.setOurMission(opAbout.getOurMission());
-        about.setOurVision(opAbout.getOurVision());
-        about.setSchoolImgPath(opAbout.getSchoolImgPath());
+        try {
+            about.setTitle(opAbout.getTitle());
+            about.setSubtitle(opAbout.getSubtitle());
+            about.setOurMission(opAbout.getOurMission());
+            about.setOurVision(opAbout.getOurVision());
+            about.setSchoolImgPath(opAbout.getSchoolImgPath());
 
-        // 히스토리 할당
-        List<History> historyList = opAbout.getHistoryList();
-        historyList.sort(Comparator.comparing(History::getYear));  // ID값을 오름차순 정렬을 다시 해줌
-        about.setHistoryList(historyList);
+            // 히스토리 할당
+            List<History> historyList = opAbout.getHistoryList();
+            if (historyList != null && historyList.size() > 0) {
+                historyList.sort(Comparator.comparing(History::getYear));  // ID값을 오름차순 정렬을 다시 해줌
+            }
+            about.setHistoryList(historyList);
 
-        // PK로 전달 필요
-        about.setId(opAbout.getId());  
+            // PK로 전달 필요
+            about.setId(opAbout.getId());      
 
+            System.out.println("Done!");
+        } catch (Exception e) {
+            System.out.println(e.getStackTrace());
+        }
+        
         return "admin/manage";  // admin/manage.html
     }
 
     @PostMapping("/about")
     public String postAbout(About about, Principal principal) throws RuntimeException {
         
-        About orignAbout = aboutService.getAbout();
+        About orignAbout = aboutService.getAboutLatest();
 
         orignAbout.setTitle(about.getTitle());
         orignAbout.setSubtitle(about.getSubtitle());

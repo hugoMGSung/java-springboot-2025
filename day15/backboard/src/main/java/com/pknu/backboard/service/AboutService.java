@@ -2,6 +2,7 @@ package com.pknu.backboard.service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class AboutService {
     // }
 
     public About getAbout() {
+        
         About about = this.aboutRepository.findAll().get(0);
 
         // ID값으로 또는 year로 오름차순 정렬을 다시하고 할당
@@ -37,5 +39,17 @@ public class AboutService {
         this.aboutRepository.save(about);
 
         System.out.println("저장완료!");
+    }
+
+    // 최신 내용이 없으면 빈값으로 리턴
+    public About getAboutLatest() {
+        // Order by DESC로 처리해도 됨
+        Optional<About> opAbout = aboutRepository.findById(1L);
+
+        if (opAbout.isPresent()) {
+            return opAbout.get();
+        } else {
+            return new About();
+        }
     }
 }

@@ -1,5 +1,6 @@
 package com.pknu.backboard.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +18,8 @@ public class History {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    // H2에서 year라는 용어 keyword라서 여기서 오류
+    @Column(name = "years")
     private String year;
 
     private String description;

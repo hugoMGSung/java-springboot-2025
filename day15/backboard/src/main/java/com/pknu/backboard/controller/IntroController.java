@@ -21,7 +21,7 @@ public class IntroController {
     @GetMapping("/about")
     public String aboutPage(Model model) {
         // DB에서 동적으로 들고올 데이터 가져오기
-        About about = aboutService.getAbout();
+        About about = aboutService.getAboutLatest();
 
         model.addAttribute("about", about); // FE로 넘겨줄 준비 끝        
         return "intro/about"; // intro/about.html 리턴

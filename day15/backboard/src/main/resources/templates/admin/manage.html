@@ -63,7 +63,9 @@
 
       <div class="row">
         <div class="col">
-            <h5 th:text="|${#lists.size(about.historyList)}개의 히스토리|"></h5>
+            <!-- about.historyList가 null인데 lists.size()를 사용할 수 없어서 예외발생 -->
+            <h5 th:if="${about.historyList != null}" 
+                th:text="|${#lists.size(about.historyList)}개의 히스토리|"></h5>
         </div>
       </div>
 
@@ -101,7 +103,6 @@
                             <input type="submit" value="저장" class="btn btn-sm btn-success">
                         </div>
                     </form>
-
                 </div>
 
             </div>
