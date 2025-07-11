@@ -1057,7 +1057,7 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
 
         5. VS Code에서 jar파일 생성되도록 빌드
             1. test 폴더 내 java파일의 @SpringbootTest @Test 부분 주석처리(빌드 오류)
-            2. application.properties, build.gradle을 배포할 내용으로 수정
+            2. **application.properties**, build.gradle을 배포할 내용으로 수정
             3. Gradle for java > Tasks > build > build 먼저 처리
             4. Gradle for java > Tasks > build > bootJar 실행
             5. build/libs/*SNAPSHOT.jar 파일 생성 확인
