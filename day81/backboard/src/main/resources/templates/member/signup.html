@@ -1,0 +1,60 @@
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content" class="form-signup">
+        <!-- Page Title -->
+        <div
+            class="page-title dark-background"
+            th:style="|background-image: url('@{/img/education/showcase-1.webp}')|">
+            <div class="container position-relative">
+                <h1>Signup</h1>
+                <p>
+                회원가입 하세요
+                </p>
+                <nav class="breadcrumbs">
+                <ol>
+                    <li><a href="/">Home</a></li>
+                    <li class="current">Signup</li>
+                </ol>
+                </nav>
+            </div>
+        </div>
+        <!-- End Page Title -->
+
+        <section id="signup" class="signin section">
+            <div class="row d-flex justify-content-center">
+                <div class="col-5">
+                    <div class="my-3 border-bottom ">
+                        <h4 class="text-center">회원가입</h4>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="row d-flex justify-content-center">
+                <div class="col-5">
+                    <form th:object="${memberForm}" th:action="@{/member/signup}" method="post">
+                        <div th:replace="~{valid_error :: errorFragment}"></div>
+    
+                        <div class="mb-2">
+                            <label for="username" class="form-label">사용자아이디(이메일)</label>
+                            <input type="email" th:field="*{username}" class="form-control" 
+                                   placeholder="you@example.com">
+                        </div>
+                        <div class="mb-2">
+                            <label for="password1" class="form-label">패스워드</label>
+                            <input type="password" th:field="*{password1}" class="form-control">
+                        </div>
+                        <div class="mb-2">
+                            <label for="password2" class="form-label">패스워드 확인</label>
+                            <input type="password" th:field="*{password2}" class="form-control">
+                        </div>
+    
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-register">회원가입</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+</html> 
