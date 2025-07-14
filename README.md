@@ -1188,10 +1188,14 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
         8. CustomOAuth2UserService 아래부분 완성
         9. SecurityConfig에 CustomOAuth2UserService 를 추가
         10. /member_signin.html에 소셜로그인 버튼 추가
-            
-        11. CustomOAuth2UserService oAuth2Reponse 이후 작업 진행
 
-
+        11. Member Entity에 privder 추가        
+        12. CustomOAuth2UserService oAuth2Reponse 이후 Member저장로직 추가
+        13. dto.MemberDto 생성
+        14. CustomOAuth2UserService Member 저장로직 이후 로그인 세션에 넣을 객체생성
+        15. dto.CustomOAuth2User 클래스 생성
+        16. CustomOAuth2UserService MemberDto 리턴부분 추가
+        17. CustomOAuth2User에 UserDetails 인터페이스 추가, 구현안된 메서드 추가 구현
 
 9. 나중에 추가해야할 부분
     1. [x] 회원가입 후 바로 로그인되는 기능
@@ -1199,7 +1203,7 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
     3. [x] 파일 업로드
     4. [x] 부트스트랩 프리테마 NiceSchool로 변경
     5. [ ] 파일사이즈 초과시 JS로 방지
-    6. [ ] 구글로그인
+    6. [x] 구글로그인
     7. [x] AWS 라이트세일 업로드
     8. [ ] 게시글에 이미지 추가시 img 태그에 width="100%" 추가작업
     9. [x] 사용자 정보에 Role 추가
