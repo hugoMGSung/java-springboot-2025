@@ -11,11 +11,11 @@
     <form method="get" th:action="@{/busan/foodkr}">
         <label>페이지 선택 :</label>
         <select name="pageNo" onchange="this.form.submit()">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
+            <option th:each="i : ${#numbers.sequence(1, totalPages)}"
+                    th:value="${i}"
+                    th:text="${i} + ' 페이지'"
+                    th:selected="${i == currentPage}">
+            </option>
         </select>
     </form>
 
@@ -39,5 +39,10 @@
             </td>
         </tr>
     </table>
+
+    <form method="post" th:action="@{/busan/save_foodkr}">
+        <input type="hidden" name="pageNo" th:value="${currentPage}" />
+        <button type="submit">현재 페이지 저장</button>
+    </form>
 </body>
 </html>

@@ -10,13 +10,22 @@ import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pknu.openapi_demo.dto.FoodKrResponse;
+import com.pknu.openapi_demo.dto.FoodKrResponse.GetFoodKr;
+import com.pknu.openapi_demo.entity.ItemEntity;
+import com.pknu.openapi_demo.repository.RestaurantRepository;
+
+import lombok.RequiredArgsConstructor;
+
 import com.pknu.openapi_demo.dto.Item;
 
 @Service
+@RequiredArgsConstructor
 public class RestaurantService {
 
+    private final RestaurantRepository restaurantRepository;
+
     // OpenAPI 호출
-    public List<Item> fetchRestaurants(int pageNo) {
+    public GetFoodKr fetchRestaurants(int pageNo) {
         StringBuffer result = new StringBuffer();
 
         try {
@@ -55,12 +64,48 @@ public class RestaurantService {
             FoodKrResponse response = mapper.readValue(result.toString(), FoodKrResponse.class);
 
             // 리스트에 담아서 리턴
-            List<Item> foodList = response.getFoodKr.item;
-            return foodList;
+            //List<Item> foodList = response.getFoodKr.item;
+            GetFoodKr rtFoodKr = response.getFoodKr;
+            return rtFoodKr;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return null;
+    }
+
+    public int saveRestaurantToDb(int pageNo) {
+        GetFoodKr rtFoodKr = fetchRestaurants(pageNo);
+        List<Item> foodList = rtFoodKr.item;
+
+        int saveCount = 0;
+        
+        for (Item item : foodList) {
+            if (!restaurantRepository.existsById(item.UC_SEQ)) { // 중복된 키가 없으면
+                ItemEntity entity = new ItemEntity();
+                entity.setUC_SEQ(item.UC_SEQ);
+                entity.setMAIN_TITLE(item.MAIN_TITLE);
+                entity.setGUGUN_NM(item.GUGUN_NM);
+                entity.setLAT(item.LAT);
+                entity.setLNG(item.LNG);
+                entity.setPLACE(item.PLACE);
+                entity.setTITLE(item.TITLE);
+                entity.setSUBTITLE(item.SUBTITLE);
+                entity.setADDR1(item.ADDR1);
+                entity.setADDR2(item.ADDR2);
+                entity.setCNTCT_TEL(item.CNTCT_TEL);
+                entity.setHOMEPAGE_URL(item.HOMEPAGE_URL);
+                entity.setUSAGE_DAY_WEEK_AND_TIME(item.USAGE_DAY_WEEK_AND_TIME);
+                entity.setRPRSNTV_MENU(item.RPRSNTV_MENU);
+                entity.setMAIN_IMG_NORMAL(item.MAIN_IMG_NORMAL);
+                entity.setMAIN_IMG_THUMB(item.MAIN_IMG_THUMB);
+                entity.setITEMCNTNTS(item.ITEMCNTNTS);
+                
+                restaurantRepository.save(entity);
+                saveCount++;
+            }
+        }
+        
+        return saveCount;
     }
 }
