@@ -1,0 +1,51 @@
+<!-- layout.html thymeleaf 페이지 로드 -->
+<html layout:decorate="~{layout}">
+  <div layout:fragment="content">
+    <!-- Page Title -->
+    <div
+      class="page-title dark-background"
+      th:style="|background-image: url('@{/img/education/showcase-1.webp}')|"
+    >
+      <div class="container position-relative">
+        <h1>Admin</h1>
+        <p>관리자 화면</p>
+        <nav class="breadcrumbs">
+          <ol>
+            <li><a href="/">Home</a></li>
+            <li class="current">admin</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+    <!-- End Page Title -->
+
+    <section id="about_mng" class="new section mx-5">
+        <div class="row">
+        <div class="col">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <form method="post" th:object="${history}" th:action="@{|/admin/historyMod/${history.id}|}">
+                        <div class="mb-2">
+                          <label for="year" class="form-label">년도</label>
+                          <input type="text" th:field="*{year}" class="form-control" />
+                        </div>
+        
+                        <div class="mb-2">
+                          <label for="description" class="form-label">설명</label>
+                          <input type="text" th:field="*{description}" class="form-control" />
+                        </div>
+
+                        <div class="text-end">
+                            <input type="submit" value="저장" class="btn btn-sm btn-success">
+                            <a href="/admin/manage" class="btn btn-sm btn-secondary">취소</a>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</html>

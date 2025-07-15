@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>부산 맛집정보</title>
+</head>
+<body>
+    <h2>부산 맛집리스트입니다</h2>
+
+    <form method="get" th:action="@{/busan/foodkr}">
+        <label>페이지 선택 :</label>
+        <select name="pageNo" onchange="this.form.submit()">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+    </form>
+
+    <table>
+        <tr>
+            <th>번호</th>
+            <th>이름</th>
+            <th>연락처</th>
+            <th>주소</th>
+            <th>대표메뉴</th>
+            <th>이미지</th>
+        </tr>
+        <tr th:each="food : ${busanFoodList}">
+            <td th:text="${food.UC_SEQ}">번호</td>
+            <td th:text="${food.MAIN_TITLE}">이름</td>
+            <td th:text="${food.CNTCT_TEL}">연락처</td>
+            <td th:text="${food.ADDR1}">주소</td>
+            <td th:text="${food.RPRSNTV_MENU}">대표메뉴</td>
+            <td>
+                <img th:src="${food.MAIN_IMG_THUMB}" width="60" />
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
