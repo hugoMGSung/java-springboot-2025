@@ -1118,7 +1118,7 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
 
         ```java
         if (member.getRole().equals(MemberRole.ADMIN)) {        
-            authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue())); // ROLE_ADMIN
+              authorities.add(new SimpleGrantedAuthority(MemberRole.ADMIN.getValue())); // ROLE_ADMIN
         } else {
             authorities.add(new SimpleGrantedAuthority(MemberRole.USER.getValue())); // ROLE_USER
         }
@@ -1196,6 +1196,9 @@ https://github.com/user-attachments/assets/6c18f07c-a836-4d91-9f1c-8ff51d7b8fdb
         15. dto.CustomOAuth2User 클래스 생성
         16. CustomOAuth2UserService MemberDto 리턴부분 추가
         17. CustomOAuth2User에 UserDetails 인터페이스 추가, 구현안된 메서드 추가 구현
+
+    
+    <img src="./image/sb0022.png" width="700">
 
 ## 17일차
 
